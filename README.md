@@ -4,6 +4,7 @@ Turn YouTube talks into intelligence. We analyze what's said — and what's not.
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-purple.svg)](https://modelcontextprotocol.io)
+[![npm](https://img.shields.io/npm/v/@rethink-paradigms/subtext-mcp.svg)](https://www.npmjs.com/package/@rethink-paradigms/subtext-mcp)
 
 ---
 
@@ -31,15 +32,33 @@ The key innovation is **Schema Negotiation** (Stage 3): the AI proposes an analy
 ## Install
 
 ```bash
-# As an agent skill (recommended)
-npx skills add your-username/subtext
+# 1. Install the skill
+npx skills add samanvaya5/subtext
 
-# Or from source
-git clone https://github.com/samanvaya5/subtext.git
-cd subtext && ./install.sh
+# 2. Say "use subtext" to your agent
+#    It will detect the MCP server isn't connected and walk you through setup
+#    One script: detects your agent, asks for API key, writes config. No JSON editing.
 ```
 
-Requires: Node.js 18+, a [YouTube Data API key](https://console.cloud.google.com/apis/credentials).
+Requires: Node.js 18+, a [YouTube Data API key](https://console.cloud.google.com/apis/credentials) (free).
+
+### Manual MCP server setup
+
+If you prefer to configure manually, add this to your agent's MCP config:
+
+```json
+{
+  "mcpServers": {
+    "subtext": {
+      "command": "npx",
+      "args": ["-y", "@rethink-paradigms/subtext-mcp"],
+      "env": { "YOUTUBE_API_KEY": "your-key" }
+    }
+  }
+}
+```
+
+Or install from source: `git clone https://github.com/samanvaya5/subtext.git && cd subtext && ./install.sh`
 
 ## Analysis modes
 
@@ -66,7 +85,7 @@ Requires: Node.js 18+, a [YouTube Data API key](https://console.cloud.google.com
 Two things in one package:
 
 - **The Skill** (`skill/SKILL.md`) — teaches your agent the 6-stage workflow. Checkpoints, schemas, synthesis patterns — all defined.
-- **The MCP Server** (`yt-mcp-server/`) — 14 YouTube tools: search, transcripts (single/bulk), channel videos, playlists, comments, activities, subscriptions, categories.
+- **The MCP Server** ([`@rethink-paradigms/subtext-mcp` on npm](https://www.npmjs.com/package/@rethink-paradigms/subtext-mcp)) — 14 YouTube tools: search, transcripts (single/bulk), channel videos, playlists, comments, activities, subscriptions, categories.
 
 The skill tells the agent *what to do*. The MCP server gives it *the tools to do it*.
 

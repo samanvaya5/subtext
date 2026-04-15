@@ -15,9 +15,26 @@ The workflow has six stages. Each stage ends with a **CHECKPOINT** — you MUST 
 
 Before anything else, verify the YouTube MCP server tools are available. Try calling `youtube_search` with a minimal query. If it fails:
 
-1. Look for a bundled MCP server at `./yt-mcp-server/` (relative to this skill file)
-2. If found, run the setup script at `scripts/setup-mcp.sh` to build and configure it
-3. If not found, tell the user: "The YouTube MCP server is required but not detected. Install Subtext from the repo and configure the MCP server in your AI tool's MCP settings."
+1. Run the setup script: `bash scripts/setup-mcp.sh` (relative to this skill file)
+2. The script will:
+   - Ask for the user's YouTube Data API key (get one at https://console.cloud.google.com/apis/credentials)
+   - Detect which AI agent(s) the user has installed
+   - Automatically write the MCP server config to the right place
+   - No JSON editing needed
+3. After the script completes, tell the user to restart their AI tool
+
+If the script fails or the user prefers manual setup, they can add this to their agent's MCP config:
+```json
+{
+  "mcpServers": {
+    "subtext": {
+      "command": "npx",
+      "args": ["-y", "@rethink-paradigms/subtext-mcp"],
+      "env": { "YOUTUBE_API_KEY": "their-key-here" }
+    }
+  }
+}
+```
 
 Only proceed to Stage 1 once MCP tools are confirmed working.
 
