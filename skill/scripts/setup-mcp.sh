@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SUBTEXT_VERSION="1.0.0"
-MCP_SERVER="@rethink-paradigms/@rethink-paradigms/subtext-mcp"
+MCP_SERVER="@rethink-paradigms/subtext-mcp"
 
 echo ""
 echo "=== Subtext MCP Server Setup ==="
@@ -25,39 +25,28 @@ fi
 write_mcp_json() {
 	local config_path="$1"
 	local top_key="${2:-mcpServers}"
-	local temp
 
-	if [ -f "$config_path" ]; then
-		temp=$(cat "$config_path")
-	else
-		temp="{}"
-	fi
-
-	if command -v jq &>/dev/null; then
-		echo "$temp" | jq --arg key "$API_KEY" '
-            if .'$top_key' == null then . + {'"\"$top_key\""'": {}} else . end |
-            .'"\"$top_key\""'["subtext"] = {
-                "command": "npx",
-                "args": ["-y", "@rethink-paradigms/@rethink-paradigms/subtext-mcp"],
-                "env": {"YOUTUBE_API_KEY": $key}
-            }
-        ' >"$config_path"
-	else
-		local entry='{"command":"npx","args":["-y","@rethink-paradigms/@rethink-paradigms/subtext-mcp"],"env":{"YOUTUBE_API_KEY":"'"$API_KEY"'"}}'
-		python3 -c "
+	python3 -c "
 import json, sys
+config_path = '$config_path'
+top_key = '$top_key'
+api_key = '$API_KEY'
 try:
-    with open('$config_path') as f:
+    with open(config_path) as f:
         data = json.load(f)
 except:
     data = {}
-if '$top_key' not in data:
-    data['$top_key'] = {}
-data['$top_key']['subtext'] = $entry
-with open('$config_path', 'w') as f:
+if top_key not in data:
+    data[top_key] = {}
+data[top_key]['subtext'] = {
+    'command': 'npx',
+    'args': ['-y', '@rethink-paradigms/subtext-mcp'],
+    'env': {'YOUTUBE_API_KEY': api_key}
+}
+with open(config_path, 'w') as f:
     json.dump(data, f, indent=2)
+    f.write('\n')
 "
-	fi
 }
 
 write_goose_yaml() {
