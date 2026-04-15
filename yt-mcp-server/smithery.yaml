@@ -1,0 +1,19 @@
+# Smithery configuration for Subtext YouTube MCP Server
+# Publish via: smithery mcp publish (repo build)
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      YOUTUBE_API_KEY:
+        type: string
+        title: YouTube Data API Key
+        description: Required. Get one at https://console.cloud.google.com/apis/credentials
+    required:
+      - YOUTUBE_API_KEY
+  commandFunction:
+    - command: node
+      args:
+        - build/index.js
+      env:
+        YOUTUBE_API_KEY: ${{YOUTUBE_API_KEY}}

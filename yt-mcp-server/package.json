@@ -1,0 +1,27 @@
+{
+  "name": "yt-mcp-server",
+  "version": "1.0.0",
+  "description": "YouTube MCP Server — bulk transcripts + YouTube Data API v3 tools",
+  "type": "module",
+  "bin": {
+    "yt-mcp-server": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js",
+    "dev": "tsc --watch"
+  },
+  "files": [
+    "build"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "googleapis": "^146.0.0",
+    "p-limit": "^6.2.0",
+    "youtubei.js": "^17.0.1",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

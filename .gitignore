@@ -1,0 +1,9 @@
+node_modules/
+build/
+research/
+.env
+.DS_Store
+*.tsbuildinfo
+
+ai-re/
+marketing/
