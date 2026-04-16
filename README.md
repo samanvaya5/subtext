@@ -8,6 +8,8 @@ Turn YouTube talks into intelligence. We analyze what's said — and what's not.
 
 ---
 
+![Subtext demo](interactive-skill.gif)
+
 **Install:** `npx skills add samanvaya5/subtext`
 
 Works with Claude Code, Cursor, Codex, Gemini, Cline, Windsurf, OpenCode, and 20+ other agents.
