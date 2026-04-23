@@ -1,6 +1,6 @@
 **👀 Visiting this README?**
 
-If **Subtext** clicks with you, please **[star the repo ⭐](https://github.com/samanvaya5/subtext)**.
+If **Subtext** clicks with you, please **[star the repo ⭐]**.
 
 It’s the simplest way to show it landed and helps track real interest.
 # Subtext
